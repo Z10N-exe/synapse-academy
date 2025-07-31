@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses | Synapse Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .dashboard-nav {
+            height: calc(100vh - 4rem);
+        }
+        .dashboard-content {
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+    <nav class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-brain text-2xl"></i>
+                    <span class="text-xl font-bold">Synapse Academy</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="text-gray-300 hover:text-white">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                    <i class="fas fa-user text-indigo-600"></i>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden gradient-bg px-4 pb-4">
+            <a href="dashboard.html" class="block py-2 hover:text-gray-200">Dashboard</a>
+            <a href="my-courses.html" class="block py-2 hover:text-gray-200">My Courses</a>
+            <a href="projects.html" class="block py-2 hover:text-gray-200">Projects</a>
+            <a href="earnings.html" class="block py-2 hover:text-gray-200">Earnings</a>
+            <a href="settings.html" class="block py-2 hover:text-gray-200">Settings</a>
+            <a href="recent-projects.html" class="block py-2 hover:text-gray-200">Recent Projects</a>
+            <a href="saved-items.html" class="block py-2 hover:text-gray-200">Saved Items</a>
+            <a href="index.html" class="block py-2 hover:text-gray-200">Logout</a>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <div class="w-16 md:w-56 bg-gray-100 flex-shrink-0 border-r border-gray-200 dashboard-nav">
+            <div class="p-4">
+                <div class="space-y-4">
+                    <a href="dashboard.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                        <i class="fas fa-home"></i>
+                        <span class="hidden md:inline">Dashboard</span>
+                    </a>
+                    <a href="my-courses.html" class="w-full flex items-center space-x-3 p-2 rounded-lg bg-indigo-600 text-white">
+                        <i class="fas fa-book"></i>
+                        <span class="hidden md:inline">My Courses</span>
+                    </a>
+                    <a href="projects.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                        <i class="fas fa-project-diagram"></i>
+                        <span class="hidden md:inline">Projects</span>
+                    </a>
+                    <a href="earnings.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                        <i class="fas fa-wallet"></i>
+                        <span class="hidden md:inline">Earnings</span>
+                    </a>
+                    <a href="settings.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                        <i class="fas fa-cog"></i>
+                        <span class="hidden md:inline">Settings</span>
+                    </a>
+                </div>
+                <div class="mt-8 pt-4 border-t border-gray-300">
+                    <h4 class="text-xs uppercase font-bold text-gray-500 mb-3 hidden md:block">Quick Access</h4>
+                    <div class="space-y-2">
+                        <a href="recent-projects.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-bolt text-yellow-500"></i>
+                            <span class="hidden md:inline">Recent Projects</span>
+                        </a>
+                        <a href="saved-items.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-star text-blue-500"></i>
+                            <span class="hidden md:inline">Saved Items</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-1 dashboard-content p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">My Courses</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 card-hover">
+                    <div class="h-32 bg-blue-600 flex items-center justify-center">
+                        <i class="fas fa-code text-white text-4xl"></i>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-bold text-gray-800">Advanced JavaScript</h4>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">72%</span>
+                        </div>
+                        <div class="flex items-center mt-2 mb-3">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: 72%"></div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">ES6+</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Async</span>
+                        </div>
+                        <a href="#" class="block text-center bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-300">Resume Course</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 card-hover">
+                    <div class="h-32 bg-purple-600 flex items-center justify-center">
+                        <i class="fas fa-paint-brush text-white text-4xl"></i>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-bold text-gray-800">UI/UX Design</h4>
+                            <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">45%</span>
+                        </div>
+                        <div class="flex items-center mt-2 mb-3">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-purple-600 h-2 rounded-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Figma</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Wireframing</span>
+                        </div>
+                        <a href="#" class="block text-center bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-300">Resume Course</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 card-hover">
+                    <div class="h-32 bg-green-600 flex items-center justify-center">
+                        <i class="fas fa-database text-white text-4xl"></i>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-bold text-gray-800">Database Management</h4>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">90%</span>
+                        </div>
+                        <div class="flex items-center mt-2 mb-3">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">SQL</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">MongoDB</span>
+                        </div>
+                        <a href="#" class="block text-center bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-300">Resume Course</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+            try {
+                const response = await fetch('http://localhost:5000/api/user', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!response.ok) {
+                    localStorage.removeItem('token');
+                    window.location.href = 'login.html';
+                }
+            } catch (error) {
+                localStorage.removeItem('token');
+                window.location.href = 'login.html';
+            }
+        });
+
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

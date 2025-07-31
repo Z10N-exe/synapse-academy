@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses | Synapse Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800 bg-gray-100">
+    <!-- Navigation Bar -->
+    <nav class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-brain text-2xl"></i>
+                    <span class="text-xl font-bold">Synapse Academy</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="text-gray-300 hover:text-white">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                    <i class="fas fa-user text-indigo-600"></i>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden gradient-bg px-4 pb-4">
+            <a href="enroll-course.html" class="block py-2 hover:text-gray-200">Enroll in Course</a>
+            <a href="student-courses.html" class="block py-2 hover:text-gray-200">My Courses</a>
+            <a href="index.html" class="block py-2 hover:text-gray-200">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto p-6">
+        <h3 class="text-xl font-bold text-gray-800 mb-6">My Courses</h3>
+        <div id="course-list" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Courses will be populated dynamically -->
+        </div>
+    </div>
+
+    <!-- Modal for viewing lessons -->
+    <div id="lesson-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-xl p-6 w-full max-w-2xl">
+            <h4 class="text-lg font-bold text-gray-800 mb-4" id="modal-course-title"></h4>
+            <div id="lesson-content" class="space-y-4"></div>
+            <button id="close-lesson-modal" class="mt-4 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is authenticated
+        document.addEventListener('DOMContentLoaded', async function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+            try {
+                const response = await fetch('http://localhost:8000/api/user', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!response.ok) {
+                    localStorage.removeItem('token');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                // Fetch enrolled courses
+                const coursesResponse = await fetch('http://localhost:8000/api/student/courses', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (coursesResponse.ok) {
+                    const courses = await coursesResponse.json();
+                    const container = document.getElementById('course-list');
+                    if (courses.length === 0) {
+                        container.innerHTML = '<p class="text-sm text-gray-600">No courses enrolled yet.</p>';
+                    } else {
+                        courses.forEach(course => {
+                            const div = document.createElement('div');
+                            div.className = 'bg-white rounded-xl shadow-sm overflow-hidden border-gray-200 card-hover';
+                            div.innerHTML = `
+                                <div class="h-32 bg-blue-600 flex items-center justify-center">
+                                    <i class="fas fa-book text-white text-4xl"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h4 class="font-bold text-gray-800">${course.title}</h4>
+                                    <p class="text-sm text-gray-600 mt-2">Category: ${course.category}</p>
+                                    <button onclick="viewCourse('${course._id}', '${course.title}')" class="block w-full text-center bg-indigo-600 text-white py-2 rounded-md mt-3 hover:bg-indigo-700">
+                                        View Lessons
+                                    </button>
+                                </div>
+                            `;
+                            container.appendChild(div);
+                        });
+                    }
+                }
+            } catch (error) {
+                localStorage.removeItem('token');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        document.addEventListener('DOMContentLoaded', async function() {
+    // Existing auth code...
+    try {
+        const response = await fetch('http://localhost:8000/api/classes/', {
+            headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        });
+        if (response.ok) {
+            const courses = await response.json();
+            const select = document.querySelector('select[name="course_id"]');
+            select.innerHTML = '<option value="">Select a course</option>';
+            courses.forEach(course => {
+                const option = document.createElement('option');
+                option.value = course._id;
+                option.textContent = course.title;
+                select.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+    }
+});
+
+        // View course lessons
+        async function viewCourse(courseId, courseTitle) {
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch(`http://localhost:8000/api/courses/${courseId}/lessons`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (response.ok) {
+                    const lessons = await response.json();
+                    const modal = document.getElementById('lesson-modal');
+                    document.getElementById('modal-course-title').textContent = courseTitle;
+                    const content = document.getElementById('lesson-content');
+                    content.innerHTML = '';
+                    if (lessons.length === 0) {
+                        content.innerHTML = '<p class="text-sm text-gray-600">No lessons available.</p>';
+                    } else {
+                        lessons.forEach(lesson => {
+                            const div = document.createElement('div');
+                            div.className = 'border-b pb-2';
+                            div.innerHTML = `
+                                <h5 class="text-sm font-medium text-gray-800">${lesson.title}</h5>
+                                <p class="text-sm text-gray-600">${lesson.content}</p>
+                                ${lesson.video_path ? `<video class="mt-2 w-full" controls><source src="/uploads${lesson.video_path}" type="video/mp4"></video>` : ''}
+                            `;
+                            content.appendChild(div);
+                        });
+                    }
+                    modal.classList.remove('hidden');
+                } else {
+                    alert('Failed to load lessons.');
+                }
+            } catch (error) {
+                alert('Error loading lessons.');
+            }
+        }
+
+        // Close modal
+        document.getElementById('close-lesson-modal').addEventListener('click', function() {
+            document.getElementById('lesson-modal').classList.add('hidden');
+        });
+    </script>
+</body>
+</html>

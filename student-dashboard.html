@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | Synapse Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .dashboard-nav {
+            height: calc(100vh - 4rem);
+        }
+        .dashboard-content {
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+    <!-- Dashboard Header -->
+    <!-- Navigation Bar -->
+<nav class="gradient-bg text-white shadow-lg">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-brain text-2xl"></i>
+                <span class="text-xl font-bold">Synapse Academy</span>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="relative">
+                <button class="text-gray-300 hover:text-white">
+                    <i class="fas fa-bell"></i>
+                </button>
+                <span class="absolute top-0 right-0 w-2 h-4 bg-red-500 rounded-full"></span>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                <i class="fas fa-user text-indigo-600"></i>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden gradient-bg px-4 pb-4">
+        <a href="student-dashboard.html" class="block py-2 hover:text-gray-200">Dashboard</a>
+        <a href="my-courses.html" class="block py-2 hover:text-gray-200">My Courses</a>
+        <a href="projects.html" class="block py-2 hover:text-gray-200">Projects</a>
+        <a href="earnings.html" class="block py-2 hover:text-gray-200">Earnings</a>
+        <a href="settings.html" class="block py-2 hover:text-gray-200">Settings</a>
+        <a href="recent-projects.html" class="block py-2 hover:text-gray-200">Recent Projects</a>
+        <a href="saved-items.html" class="block py-2 hover:text-gray-200">Saved Items</a>
+        <a href="index.html" class="block py-2 hover:text-gray-200">Logout</a>
+    </div>
+</nav>
+
+<!-- Sidebar -->
+<div class="w-16 md:w-56 bg-gray-100 flex-shrink-0 border-r border-gray-200 dashboard-nav">
+    <div class="p-4">
+        <div class="space-y-4">
+            <a href="student-dashboard.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                <i class="fas fa-home"></i>
+                <span class="hidden md:inline">Dashboard</span>
+            </a>
+            <a href="my-courses.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                <i class="fas fa-book"></i>
+                <span class="hidden md:inline">My Courses</span>
+            </a>
+            <a href="projects.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                <i class="fas fa-project-diagram"></i>
+                <span class="hidden md:inline">Projects</span>
+            </a>
+            <a href="earnings.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                <i class="fas fa-wallet"></i>
+                <span class="hidden md:inline">Earnings</span>
+            </a>
+            <a href="settings.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                <i class="fas fa-cog"></i>
+                <span class="hidden md:inline">Settings</span>
+            </a>
+        </div>
+        <div class="mt-8 pt-4 border-t border-gray-300">
+            <h4 class="text-xs uppercase font-bold text-gray-500 mb-3 hidden md:block">Quick Access</h4>
+            <div class="space-y-2">
+                <a href="recent-projects.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                    <i class="fas fa-bolt text-yellow-500"></i>
+                    <span class="hidden md:inline">Recent Projects</span>
+                </a>
+                <a href="saved-items.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                    <i class="fas fa-star text-blue-500"></i>
+                    <span class="hidden md:inline">Saved Items</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- Main Content -->
+        <div class="flex-1 dashboard-content p-6">
+            <!-- Welcome Section -->
+            <div class="bg-indigo-50 rounded-xl p-6 mb-6">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Welcome back, Zion!</h3>
+                        <p class="text-gray-600">You have 3 active courses and 2 pending projects. Your learning progress is 68% complete.</p>
+                    </div>
+                    <button class="mt-4 md:mt-0 bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
+                        Continue Learning
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Overview -->
+            <div class="grid md:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 card-hover">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-medium text-gray-700">Learning Progress</h4>
+                        <div class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">+12%</div>
+                    </div>
+                    <div class="flex items-center justify-center mb-3">
+                        <div class="relative w-20 h-20">
+                            <svg class="w-full h-full" viewBox="0 0 36 36">
+                                <path
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    fill="none"
+                                    stroke="#e6e6e6"
+                                    stroke-width="3"
+                                    stroke-dasharray="100, 100"
+                                />
+                                <path
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    fill="none"
+                                    stroke="#4f46e5"
+                                    stroke-width="3"
+                                    stroke-dasharray="68, 100"
+                                />
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-xl font-bold text-gray-800">68%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center text-sm text-gray-600">Overall completion across all courses</div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 card-hover">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-medium text-gray-700">Skill Mastery</h4>
+                        <div class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">5 new</div>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>JavaScript</span>
+                                <span>82%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>UI/UX Design</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-purple-600 h-2 rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="mt-4 w-full text-center text-sm text-indigo-600 hover:text-indigo-800">View All Skills</button>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 card-hover">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-medium text-gray-700">Earnings</h4>
+                        <div class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">$1,250</div>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-800 mb-2">$3,450</div>
+                    <div class="text-sm text-gray-600 mb-4">Total earned from projects</div>
+                    <button class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-300">Withdraw Earnings</button>
+                </div>
+            </div>
+
+            <!-- Current Courses -->
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Your Current Courses</h3>
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 card-hover">
+                    <div class="h-32 bg-blue-600 flex items-center justify-center">
+                        <i class="fas fa-code text-white text-4xl"></i>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-bold text-gray-800">Advanced JavaScript</h4>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">72%</span>
+                        </div>
+                        <div class="flex items-center mt-2 mb-3">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: 72%"></div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">ES6+</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Async</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 card-hover">
+                    <div class="h-32 bg-purple-600 flex items-center justify-center">
+                        <i class="fas fa-paint-brush text-white text-4xl"></i>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-bold text-gray-800">UI/UX Design</h4>
+                            <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">45%</span>
+                        </div>
+                        <div class="flex items-center mt-2 mb-3">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-purple-600 h-2 rounded-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Figma</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">Wireframing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommended Projects -->
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-gray-800">Recommended Projects</h3>
+                <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">View All</button>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 card-hover">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Skills</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Earnings</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="font-medium text-gray-900">E-commerce Frontend</div>
+                                    <div class="text-sm text-gray-500">React implementation</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex space-x-1">
+                                        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded">React</span>
+                                        <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-0.5 rounded">CSS</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">$600</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button class="text-indigo-600 hover:text-indigo-900">Apply</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

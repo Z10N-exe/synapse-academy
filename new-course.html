@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Course | Synapse Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .dashboard-nav {
+            height: calc(100vh - 4rem);
+        }
+        .dashboard-content {
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+    <!-- Navigation Bar -->
+    <nav class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-brain text-2xl"></i>
+                    <span class="text-xl font-bold">Synapse Academy</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="text-gray-300 hover:text-white">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                    <i class="fas fa-user text-indigo-600"></i>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden gradient-bg px-4 pb-4">
+            <a href="instructor-dashboard.html" class="block py-2 hover:text-gray-200">Dashboard</a>
+            <a href="my-classes.html" class="block py-2 hover:text-gray-200">My Classes</a>
+            <a href="content-creation.html" class="block py-2 hover:text-gray-200">Content Creation</a>
+            <a href="analytics.html" class="block py-2 hover:text-gray-200">Analytics</a>
+            <a href="instructor-settings.html" class="block py-2 hover:text-gray-200">Settings</a>
+            <a href="student-progress.html" class="block py-2 hover:text-gray-200">Student Progress</a>
+            <a href="new-course.html" class="block py-2 hover:text-gray-200">New Course</a>
+            <a href="index.html" class="block py-2 hover:text-gray-200">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-16 md:w-56 bg-gray-100 flex-shrink-0 border-r border-gray-200 dashboard-nav">
+            <div class="p-4">
+                <div class="space-y-4">
+                    <a href="instructor-dashboard.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                        <i class="fas fa-home"></i>
+                        <span class="hidden md:inline">Dashboard</span>
+                    </a>
+                    <a href="my-classes.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                        <i class="fas fa-book"></i>
+                        <span class="hidden md:inline">My Classes</span>
+                    </a>
+                    <a href="content-creation.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                        <i class="fas fa-edit"></i>
+                        <span class="hidden md:inline">Content Creation</span>
+                    </a>
+                    <a href="analytics.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                        <i class="fas fa-chart-bar"></i>
+                        <span class="hidden md:inline">Analytics</span>
+                    </a>
+                    <a href="instructor-settings.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                        <i class="fas fa-cog"></i>
+                        <span class="hidden md:inline">Settings</span>
+                    </a>
+                </div>
+                <div class="mt-8 pt-4 border-t border-gray-300">
+                    <h4 class="text-xs uppercase font-bold text-gray-500 mb-3 hidden md:block">Quick Access</h4>
+                    <div class="space-y-2">
+                        <a href="student-progress.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-graduation-cap text-green-500"></i>
+                            <span class="hidden md:inline">Student Progress</span>
+                        </a>
+                        <a href="new-course.html" class="w-full flex items-center space-x-3 p-2 rounded-lg bg-indigo-600 text-white">
+                            <i class="fas fa-plus-circle text-blue-500"></i>
+                            <span class="hidden md:inline">New Course</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 dashboard-content p-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">Create New Course</h3>
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 card-hover">
+                <h4 class="text-lg font-medium text-gray-700 mb-4">Course Details</h4>
+                <form id="course-form">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Course Title</label>
+                        <input type="text" name="title" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                        <select name="category" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                            <option value="">Select a category</option>
+                            <option value="programming">Programming</option>
+                            <option value="design">Design</option>
+                            <option value="data">Data Science</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                        <textarea name="description" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" rows="5" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Cover Image</label>
+                        <input type="file" name="cover_image" accept="image/*" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
+                        <input type="number" name="price" min="0" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-300">Create Course</button>
+                </form>
+                <div id="access-code" class="hidden mt-4 p-4 bg-green-100 rounded-md">
+                    <p class="text-sm font-medium text-green-800">Course created successfully! Share this access code with students:</p>
+                    <p id="code-display" class="text-lg font-bold text-green-900 mt-2"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is authenticated
+        document.addEventListener('DOMContentLoaded', async function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+            try {
+                const response = await fetch('http://localhost:8000/api/user', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!response.ok) {
+                    localStorage.removeItem('token');
+                    window.location.href = 'login.html';
+                }
+            } catch (error) {
+                localStorage.removeItem('token');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Form submission handler
+        document.getElementById('course-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch('http://localhost:8000/courses/', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    body: formData
+                });
+                if (response.ok) {
+                    const course = await response.json();
+                    document.getElementById('access-code').classList.remove('hidden');
+                    document.getElementById('code-display').textContent = course.access_code;
+                    e.target.reset();
+                } else {
+                    alert('Failed to create course.');
+                }
+            } catch (error) {
+                alert('Error creating course.');
+            }
+        });
+    </script>
+</body>
+</html>

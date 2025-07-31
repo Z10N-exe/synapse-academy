@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | Synapse Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .dashboard-nav {
+            height: calc(100vh - 4rem);
+        }
+        .dashboard-content {
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+    <!-- Navigation Bar -->
+    <nav class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-brain text-2xl"></i>
+                    <span class="text-xl font-bold">Synapse Academy</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="text-gray-300 hover:text-white">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                    <i class="fas fa-user text-indigo-600"></i>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden gradient-bg px-4 pb-4">
+            <a href="instructor-dashboard.html" class="block py-2 hover:text-gray-200">Dashboard</a>
+            <a href="my-classes.html" class="block py-2 hover:text-gray-200">My Classes</a>
+            <a href="content-creation.html" class="block py-2 hover:text-gray-200">Content Creation</a>
+            <a href="analytics.html" class="block py-2 hover:text-gray-200">Analytics</a>
+            <a href="instructor-settings.html" class="block py-2 hover:text-gray-200">Settings</a>
+            <a href="student-progress.html" class="block py-2 hover:text-gray-200">Student Progress</a>
+            <a href="new-course.html" class="block py-2 hover:text-gray-200">New Course</a>
+            <a href="index.html" class="block py-2 hover:text-gray-200">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-16 md:w-56 bg-gray-100 flex-shrink-0 border-r border-gray-200 dashboard-nav">
+            <div class="p-4">
+                <div class="space-y-4">
+                    <a href="instructor-dashboard.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                        <i class="fas fa-home"></i>
+                        <span class="hidden md:inline">Dashboard</span>
+                    </a>
+                    <a href="my-classes.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                        <i class="fas fa-book"></i>
+                        <span class="hidden md:inline">My Classes</span>
+                    </a>
+                    <a href="content-creation.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                        <i class="fas fa-edit"></i>
+                        <span class="hidden md:inline">Content Creation</span>
+                    </a>
+                    <a href="analytics.html" class="w-full flex items-center space-x-3 p-2 rounded-lg bg-indigo-600 text-white">
+                        <i class="fas fa-chart-bar"></i>
+                        <span class="hidden md:inline">Analytics</span>
+                    </a>
+                    <a href="instructor-settings.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                        <i class="fas fa-cog"></i>
+                        <span class="hidden md:inline">Settings</span>
+                    </a>
+                </div>
+                <div class="mt-8 pt-4 border-t border-gray-300">
+                    <h4 class="text-xs uppercase font-bold text-gray-500 mb-3 hidden md:block">Quick Access</h4>
+                    <div class="space-y-2">
+                        <a href="student-progress.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-graduation-cap text-green-500"></i>
+                            <span class="hidden md:inline">Student Progress</span>
+                        </a>
+                        <a href="new-course.html" class="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-plus-circle text-blue-500"></i>
+                            <span class="hidden md:inline">New Course</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 dashboard-content p-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">Analytics</h3>
+            <!-- Summary Cards -->
+            <div class="grid md:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 card-hover">
+                    <h4 class="text-lg font-medium text-gray-700 mb-4">Student Engagement</h4>
+                    <div class="text-3xl font-bold text-gray-800">78%</div>
+                    <p class="mt-2 text-sm text-gray-600">Average completion rate across all classes</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 card-hover">
+                    <h4 class="text-lg font-medium text-gray-700 mb-4">Total Enrollments</h4>
+                    <div class="text-3xl font-bold text-gray-800">95</div>
+                    <p class="mt-2 text-sm text-gray-600">Students enrolled in your classes</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 card-hover">
+                    <h4 class="text-lg font-medium text-gray-700 mb-4">Earnings This Month</h4>
+                    <div class="text-3xl font-bold text-gray-800">$1,200</div>
+                    <p class="mt-2 text-sm text-gray-600">From course subscriptions</p>
+                </div>
+            </div>
+            <!-- Class Performance -->
+            <h4 class="text-lg font-bold text-gray-800 mb-4">Class Performance</h4>
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 card-hover">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Enrollments</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg. Progress</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Advanced JavaScript</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">40</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">85%</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$600</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">UI/UX Design</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">25</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">60%</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$400</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Database Management</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">30</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">50%</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$500</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is authenticated
+        document.addEventListener('DOMContentLoaded', async function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+            try {
+                const response = await fetch('http://localhost:5000/api/user', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!response.ok) {
+                    localStorage.removeItem('token');
+                    window.location.href = 'login.html';
+                }
+            } catch (error) {
+                localStorage.removeItem('token');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

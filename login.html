@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Synapse Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800 bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">
+        <div class="flex items-center justify-center mb-6">
+            <i class="fas fa-brain text-4xl text-indigo-600"></i>
+            <h1 class="text-2xl font-bold ml-2">Synapse Academy</h1>
+        </div>
+        <h2 class="text-xl font-semibold text-gray-800 mb-6 text-center">Login</h2>
+        <form id="login-form">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1" for="email">Email</label>
+                <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1" for="password">Password</label>
+                <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+            </div>
+            <button type="submit" id="login-button" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed">Login</button>
+        </form>
+        <p class="mt-4 text-center text-sm text-gray-600">
+            Don't have an account? <a href="signup.html" class="text-indigo-600 hover:underline">Sign up</a>
+        </p>
+    </div>
+
+    <script>
+        console.log('Login page loaded');
+
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            console.log('Login form submitted');
+
+            const email = document.getElementById('email').value.toLowerCase();
+            const password = document.getElementById('password').value;
+            const loginButton = document.getElementById('login-button');
+
+            console.log('Login attempt:', { email });
+
+            // Disable button during submission
+            loginButton.disabled = true;
+            loginButton.textContent = 'Logging in...';
+
+            try {
+                // Send login request to FastAPI /token endpoint
+                const formData = new FormData();
+                formData.append('username', email);
+                formData.append('password', password);
+
+                const response = await fetch('http://localhost:8000/token', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Login failed:', errorData.detail);
+                    alert('Invalid email or password.');
+                    return;
+                }
+
+                const data = await response.json();
+                const token = data.access_token;
+                localStorage.setItem('token', token);
+                console.log('Token set:', token);
+
+                // Fetch user details to get role
+                const userResponse = await fetch('http://localhost:8000/api/user', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!userResponse.ok) {
+                    console.error('Failed to fetch user details:', userResponse.status);
+                    alert('Failed to fetch user details.');
+                    return;
+                }
+
+                const user = await userResponse.json();
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                console.log('User set:', user);
+
+                // Redirect based on role
+                if (user.role === 'instructor') {
+                    console.log('Redirecting to teacher-dashboard.html');
+                    window.location.href = 'teacher-dashboard.html';
+                } else {
+                    console.log('Redirecting to student-courses.html');
+                    window.location.href = 'student-courses.html';
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                alert('An error occurred. Please try again.');
+            } finally {
+                // Re-enable button
+                loginButton.disabled = false;
+                loginButton.textContent = 'Login';
+            }
+        });
+    </script>
+</body>
+</html>
